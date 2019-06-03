@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+
+	<insert id="insert" parameterType="postvo">
+	<![CDATA[
+		insert into post
+		values(null, #{title}, #{contents}, now(), #{categoryNo})
+	]]>
+	</insert>
+
+	<delete id="delete" parameterType="long">
+	<![CDATA[
+		delete from post where category_no=#{categoryNo}
+	]]>
+	</delete>
+
+	<select id="getList" parameterType="map" resultType="postvo">
+		<if test="categoryNo != -1">
+			<![CDATA[
+				select no, title, reg_date as regDate, category_no as categoryNo
+				from post
+				where category_no=#{categoryNo}
+				order by no desc
+			]]>
+		</if>
+		<if test="categoryNo == -1">
+			<![CDATA[
+				select no, title, reg_date as regDate, category_no as categoryNo from post
+				where category_no=(select no from category
+								where user_id=#{userId}
+								order by no desc
+								limit 0,1)
+				order by no desc
+			]]>
+		</if>
+	</select>
+	
+	<select id="get" parameterType="map" resultType="postvo">
+		<if test="postNo != -1">
+			<![CDATA[
+				select no, title, contents, category_no as categoryNo from post
+				where no=#{postNo}
+				order by no desc
+			]]>
+		</if>
+		<if test="postNo == -1">
+			<![CDATA[
+				select no, title, contents, category_no as categoryNo from post
+				where category_no=(select no from category
+								where user_id=#{userId}
+								order by no desc
+								limit 0,1)
+				order by no desc
+				limit 0,1;
+			]]>
+		</if>
+	</select>
+
+</mapper>
