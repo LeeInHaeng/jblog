@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: jblog5
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Bit
+Implementation-Vendor-Id: com.cafe24
+Build-Jdk: 1.8.0_211
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/jblog5
+Created-By: Maven Integration for Eclipse
+
